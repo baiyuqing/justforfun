@@ -14,8 +14,12 @@ function activate(context) {
   const watcher = vscode.window.onDidChangeActiveColorTheme(() => {
     const isDark = vscode.window.activeColorTheme.kind === 2;
     const editorConfig = vscode.workspace.getConfiguration("editor");
+    const preferredDarkFont =
+      editorConfig.get("preferredDarkFont") || "JetBrains Mono";
+    const preferredLightFont =
+      editorConfig.get("preferredLightFont") || "JetBrains Mono Medium";
     editorConfig
-      .update("fontFamily", isDark ? "MonoLisa SC Light" : "MonoLisa SC")
+      .update("fontFamily", isDark ? preferredDarkFont : preferredLightFont)
       .then(
         () => {
           vscode.window.showInformationMessage("Update FontFamily");
