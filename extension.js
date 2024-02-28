@@ -5,30 +5,42 @@ const vscode = require('vscode');
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 
+
+function updateFontFamily() {
+  const isDark = vscode.window.activeColorTheme.kind === 2;
+  const editorConfig = vscode.workspace.getConfiguration("editor");
+  const preferredDarkFont =
+    editorConfig.get("preferredDarkFont") || "JetBrains Mono";
+  const preferredLightFont =
+    editorConfig.get("preferredLightFont") || "JetBrains Mono Medium";
+  editorConfig
+    .update(
+      "fontFamily",
+      isDark ? preferredDarkFont : preferredLightFont,
+      vscode.ConfigurationTarget.Global,
+      true
+    )
+    .then(
+      () => {
+        vscode.window.showInformationMessage("Update FontFamily");
+      },
+      (error) => {
+        vscode.window.showErrorMessage(`Update FontFamily Failed : ${error}`);
+      }
+    );
+}
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
   console.log('Congratulations, your extension "justforfun" is now active!');
 
+  updateFontFamily();
+
   const watcher = vscode.window.onDidChangeActiveColorTheme(() => {
-    const isDark = vscode.window.activeColorTheme.kind === 2;
-    const editorConfig = vscode.workspace.getConfiguration("editor");
-    const preferredDarkFont =
-      editorConfig.get("preferredDarkFont") || "JetBrains Mono";
-    const preferredLightFont =
-      editorConfig.get("preferredLightFont") || "JetBrains Mono Medium";
-    editorConfig
-      .update("fontFamily", isDark ? preferredDarkFont : preferredLightFont)
-      .then(
-        () => {
-          vscode.window.showInformationMessage("Update FontFamily");
-        },
-        (error) => {
-          vscode.window.showErrorMessage(`Update FontFamily Failed : ${error}`);
-        }
-      );
+    updateFontFamily();
   });
+
   context.subscriptions.push(watcher);
 }
 
