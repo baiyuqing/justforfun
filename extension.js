@@ -9,10 +9,9 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+  console.log('Congratulations, your extension "justforfun" is now active!');
 
-	console.log('Congratulations, your extension "justforfun" is now active!');
-
-	const watcher = vscode.window.onDidChangeActiveColorTheme(() => {
+  const watcher = vscode.window.onDidChangeActiveColorTheme(() => {
     const isDark = vscode.window.activeColorTheme.kind === 2;
     const editorConfig = vscode.workspace.getConfiguration("editor");
     editorConfig
