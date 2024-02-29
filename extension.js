@@ -37,11 +37,15 @@ function activate(context) {
 
   updateFontFamily();
 
+  const watcherConfig = vscode.workspace.onDidChangeConfiguration(() => {
+    updateFontFamily();
+  });
   const watcher = vscode.window.onDidChangeActiveColorTheme(() => {
     updateFontFamily();
   });
 
   context.subscriptions.push(watcher);
+  context.subscriptions.push(watcherConfig);
 }
 
 // This method is called when your extension is deactivated
