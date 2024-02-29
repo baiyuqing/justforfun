@@ -22,12 +22,31 @@ function updateFontFamily() {
     )
     .then(
       () => {
-        vscode.window.showInformationMessage("Update FontFamily");
+        vscode.window.showInformationMessage("Update fontFamily");
       },
       (error) => {
-        vscode.window.showErrorMessage(`Update FontFamily Failed : ${error}`);
+        vscode.window.showErrorMessage(`Fail to update fontFamily: ${error}`);
       }
     );
+
+  /*
+  const workbenchConfig = vscode.workspace.getConfiguration("workbench");
+  workbenchConfig
+    .update(
+      "fontAliasing",
+      isDark ? "auto" : "default",
+      vscode.ConfigurationTarget.Global,
+      true
+    )
+    .then(
+      () => {
+        vscode.window.showInformationMessage("Update fontAliasing");
+      },
+      (error) => {
+        vscode.window.showErrorMessage(`Fail to update fontAliasing: ${error}`);
+      }
+    );
+    */
 }
 /**
  * @param {vscode.ExtensionContext} context
